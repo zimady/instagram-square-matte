@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="description" content="Create a 1080×1080 white Instagram square with a 10 px margin." />
+  <title>Instagram Square Matte</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app">
+    <section class="panel">
+      <h1>Instagram Square Matte</h1>
+      <p class="subhead">Create a 1080×1080 white square with a 10 px margin around your photo’s longest edge.</p>
+
+      <label class="dropzone" for="fileInput" id="dropzone">
+        <input id="fileInput" type="file" accept="image/*" />
+        <span class="drop-title">Choose image</span>
+        <span class="drop-hint">or drop one here</span>
+      </label>
+
+      <div class="controls" aria-label="Output settings">
+        <div>
+          <label for="qualityInput">JPEG quality</label>
+          <input id="qualityInput" type="range" min="0.8" max="1" step="0.01" value="0.94" />
+          <span id="qualityValue">0.94</span>
+        </div>
+      </div>
+
+      <div id="status" class="status" role="status" aria-live="polite"></div>
+
+      <div class="actions">
+        <button id="downloadBtn" disabled>Download JPEG</button>
+        <button id="shareBtn" disabled>Share</button>
+        <button id="resetBtn" disabled>Reset</button>
+      </div>
+    </section>
+
+    <section class="preview-panel" aria-label="Preview">
+      <canvas id="canvas" width="1080" height="1080"></canvas>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
