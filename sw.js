@@ -1,4 +1,4 @@
-const CACHE_NAME = 'instagram-square-matte-v2';
+const CACHE_NAME = 'instagram-square-matte-v0.2.2';
 const ASSETS = [
   './',
   './index.html',
