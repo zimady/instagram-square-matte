@@ -1,6 +1,5 @@
 const OUTPUT_SIZE = 1080;
-const MARGIN = 10;
-const IMAGE_MAX_EDGE = OUTPUT_SIZE - (MARGIN * 2);
+const DEFAULT_MARGIN = 10;
 
 const fileInput = document.getElementById('fileInput');
 const dropzone = document.getElementById('dropzone');
@@ -12,6 +11,7 @@ const resetBtn = document.getElementById('resetBtn');
 const statusEl = document.getElementById('status');
 const qualityInput = document.getElementById('qualityInput');
 const qualityValue = document.getElementById('qualityValue');
+const marginInput = document.getElementById('marginInput');
 
 let currentBlob = null;
 let currentFilename = 'instagram-square-matte.jpg';
@@ -37,6 +37,10 @@ setButtons(false);
 
 qualityInput.addEventListener('input', async () => {
   qualityValue.textContent = Number(qualityInput.value).toFixed(2);
+  if (currentFile) await processFile(currentFile);
+});
+
+marginInput.addEventListener('change', async () => {
   if (currentFile) await processFile(currentFile);
 });
 
@@ -81,7 +85,9 @@ async function processFile(file) {
     ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = 'high';
 
-    const scale = IMAGE_MAX_EDGE / Math.max(bitmap.width, bitmap.height);
+    const margin = getSelectedMargin();
+    const imageMaxEdge = OUTPUT_SIZE - (margin * 2);
+    const scale = imageMaxEdge / Math.max(bitmap.width, bitmap.height);
     const drawWidth = Math.round(bitmap.width * scale);
     const drawHeight = Math.round(bitmap.height * scale);
     const x = Math.round((OUTPUT_SIZE - drawWidth) / 2);
@@ -93,13 +99,18 @@ async function processFile(file) {
     currentBlob = await canvasToBlob(canvas, 'image/jpeg', Number(qualityInput.value));
     currentFilename = makeOutputFilename(file.name);
 
-    setStatus(`${drawWidth}×${drawHeight} image on 1080×1080 white square. Margin: 10 px.`);
+    setStatus(`${drawWidth}×${drawHeight} image on 1080×1080 white square. Margin: ${margin} px.`);
     setButtons(true);
   } catch (error) {
     console.error(error);
     setStatus('Could not process that image. Try a JPEG or PNG exported as sRGB.');
     setButtons(false);
   }
+}
+
+function getSelectedMargin() {
+  const margin = Number(marginInput.value);
+  return Number.isFinite(margin) ? margin : DEFAULT_MARGIN;
 }
 
 function canvasToBlob(canvasEl, type, quality) {

@@ -6,8 +6,9 @@ A tiny static web app/PWA for creating Instagram-ready square images.
 
 - Outputs a 1080 × 1080 JPEG
 - Uses a white background
-- Resizes the source image so its longest edge is 1060 px
-- Centres the image, leaving a 10 px margin on the longest edge
+- Lets you choose a margin of 0, 5, 10, 15, or 20 px
+- Resizes the source image so its longest edge fits within the selected margin
+- Centres the image on the square canvas
 - Works offline after first load when hosted over HTTPS
 - Processes images locally in the browser; images are not uploaded anywhere
 
